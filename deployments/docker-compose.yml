@@ -1,0 +1,51 @@
+services:
+  postgres-user:
+    image: postgres:18
+    container_name: postgres-user
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_user:/var/lib/postgresql/data
+
+  postgres-hr:
+    image: postgres:18
+    container_name: postgres-hr
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hr_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_hr:/var/lib/postgresql/data
+
+  redis:
+    image: redis:8
+    container_name: erp-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: erp-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  postgres_user:
+  postgres_hr:
+  redis_data:
+  rabbitmq_data:

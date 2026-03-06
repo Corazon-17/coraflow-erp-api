@@ -1,0 +1,79 @@
+version: "3"
+
+dotenv: [".env"]
+
+tasks:
+  clean:ports:
+    desc: Kill processes using service ports
+    cmds:
+      - lsof -ti :8080,50051,50052 | xargs kill -9 || true
+
+  infra:
+    desc: Start infrastructure (colima + docker)
+    cmds:
+      - colima start
+      - docker compose -f deployments/docker-compose.yml up -d
+
+  infra:stop:
+    desc: Stop infrastructure
+    cmds:
+      - docker compose -f deployments/docker-compose.yml down
+      - colima stop
+
+  dev:
+    desc: Run all services locally
+    deps:
+      - dev:gateway
+      - dev:user
+      - dev:hr
+
+  dev:gateway:
+    desc: Run API Gateway
+    dir: services/api-gateway
+    cmds:
+      - go run ./cmd/server
+
+  dev:user:
+    desc: Run User Service
+    dir: services/user-service
+    cmds:
+      - go run ./cmd/server
+
+  dev:hr:
+    desc: Run HR Service
+    dir: services/hr-service
+    cmds:
+      - go run ./cmd/server
+
+  proto:
+    desc: Generate protobuf files
+    cmds:
+      - protoc --go_out=. --go_opt=paths=source_relative
+        --go-grpc_out=. --go-grpc_opt=paths=source_relative
+        proto/users/*.proto
+      - protoc --go_out=. --go_opt=paths=source_relative
+        --go-grpc_out=. --go-grpc_opt=paths=source_relative
+        proto/hr/*.proto
+
+  sqlc:
+    desc: Generate SQLC code
+    cmds:
+      - sqlc generate -f services/user-service/db/sqlc.yaml
+      - sqlc generate -f services/hr-service/db/sqlc.yaml
+
+  tidy:
+    desc: Go mod tidy all services
+    cmds:
+      - cd services/api-gateway && go mod tidy
+      - cd services/user-service && go mod tidy
+      - cd services/hr-service && go mod tidy
+
+  lint:
+    desc: Run linter
+    cmds:
+      - golangci-lint run ./...
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - go clean ./...
