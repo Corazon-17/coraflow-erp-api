@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gofiber/fiber/v3"
-
+	"coraflow-erp-api/services/user-service/internal/grpc"
 	"coraflow-erp-api/shared/config"
 )
 
@@ -13,14 +12,12 @@ func main() {
 
 	cfg := config.Load()
 
-	app := fiber.New()
+	log.Println("starting user-service")
 
-	app.Get("/health", func(c fiber.Ctx) error {
-		return c.JSON(fiber.Map{
-			"service": "api-gateway",
-			"env":     cfg.AppEnv,
-		})
-	})
+	err := grpc.Start(fmt.Sprintf(":%s", cfg.UserServicePort))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	log.Fatal(app.Listen(fmt.Sprintf(":%s", cfg.UserServicePort)))
+	_ = cfg
 }

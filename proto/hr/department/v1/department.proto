@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package hr.department.v1;
+
+option go_package = "coraflow-erp-api/proto/hr/department/v1;departmentpb";
+
+service DepartmentService {
+  rpc ListDepartments(ListDepartmentsRequest) returns (ListDepartmentsResponse);
+}
+
+message ListDepartmentsRequest {}
+
+message Department {
+  string id = 1;
+  string name = 2;
+}
+
+message ListDepartmentsResponse {
+  repeated Department departments = 1;
+}

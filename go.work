@@ -1,7 +1,7 @@
 go 1.26.0
 
 use (
-    ./shared
+    ./
     ./services/api-gateway
     ./services/user-service
     ./services/hr-service

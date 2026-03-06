@@ -1,14 +1,12 @@
 package config
 
 import (
-	"log"
-	"strings"
-
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	AppEnv string
+	AppEnv     string
+	ServerHost string
 
 	ApiGatewayPort  string
 	UserServicePort string
@@ -33,17 +31,11 @@ type Config struct {
 
 func Load() *Config {
 
-	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Println("No .env file found, using environment variables")
-	}
 
 	config := &Config{
-		AppEnv: viper.GetString("APP_ENV"),
+		AppEnv:     viper.GetString("APP_ENV"),
+		ServerHost: viper.GetString("SERVER_HOST"),
 
 		ApiGatewayPort:  viper.GetString("API_GATEWAY_PORT"),
 		UserServicePort: viper.GetString("USER_SERVICE_PORT"),

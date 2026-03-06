@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package hr.employee.v1;
+
+option go_package = "coraflow-erp-api/proto/hr/employee/v1;employeepb";
+
+service EmployeeService {
+  rpc GetEmployee(GetEmployeeRequest) returns (EmployeeResponse);
+}
+
+message GetEmployeeRequest {
+  string id = 1;
+}
+
+message EmployeeResponse {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
