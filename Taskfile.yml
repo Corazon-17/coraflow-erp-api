@@ -6,7 +6,7 @@ tasks:
   clean:ports:
     desc: Kill processes using service ports
     cmds:
-      - lsof -ti :8080,50051,50052,50053 | xargs kill -9 || true
+      - lsof -ti :$API_GATEWAY_PORT,$TENANT_SERVICE_PORT,$USER_SERVICE_PORT,$HR_SERVICE_PORT | xargs kill -9 || true
 
   infra:
     desc: Start infrastructure (colima + docker)
@@ -51,6 +51,18 @@ tasks:
     dir: services/hr-service
     cmds:
       - go run ./cmd/server
+
+  migrate:user:
+  cmds:
+    - migrate -path services/user-service/db/migrations -database "$USER_DB_URL" up
+
+  migrate:tenant:
+    cmds:
+      - migrate -path services/tenant-service/db/migrations -database "$TENANT_DB_URL" up
+
+  migrate:hr:
+    cmds:
+      - migrate -path services/hr-service/db/migrations -database "$HR_DB_URL" up
 
   proto:
     desc: Generate protobuf files

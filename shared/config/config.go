@@ -13,13 +13,9 @@ type Config struct {
 	UserServicePort string
 	HRServicePort   string
 
-	PostgresHost     string
-	PostgresPort     string
-	PostgresUser     string
-	PostgresPassword string
-
-	UserDB string
-	HRDB   string
+	TenantDBUrl     string
+	UserDBUrl     string
+	HRDBUrl     string
 
 	RedisHost string
 	RedisPort string
@@ -43,13 +39,9 @@ func Load() *Config {
 		UserServicePort: viper.GetString("USER_SERVICE_PORT"),
 		HRServicePort:   viper.GetString("HR_SERVICE_PORT"),
 
-		PostgresHost:     viper.GetString("POSTGRES_HOST"),
-		PostgresPort:     viper.GetString("POSTGRES_PORT"),
-		PostgresUser:     viper.GetString("POSTGRES_USER"),
-		PostgresPassword: viper.GetString("POSTGRES_PASSWORD"),
-
-		UserDB: viper.GetString("USER_DB"),
-		HRDB:   viper.GetString("HR_DB"),
+		TenantDBUrl: viper.GetString("TENANT_DB_URL"),
+		UserDBUrl: viper.GetString("USER_DB_URL"),
+		HRDBUrl:   viper.GetString("HR_DB_URL"),
 
 		RedisHost: viper.GetString("REDIS_HOST"),
 		RedisPort: viper.GetString("REDIS_PORT"),
