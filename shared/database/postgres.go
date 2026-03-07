@@ -2,25 +2,13 @@ package database
 
 import (
 	"context"
-	"fmt"
 	"time"
-
-	"coraflow-erp-api/shared/config"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewPostgres(cfg *config.Config, dbName string) (*pgxpool.Pool, error) {
-	dsn := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s",
-		cfg.PostgresUser,
-		cfg.PostgresPassword,
-		cfg.PostgresHost,
-		cfg.PostgresPort,
-		dbName,
-	)
-
-	pool, err := pgxpool.New(context.Background(), dsn)
+func NewPostgres(dbUrl string) (*pgxpool.Pool, error) {
+	pool, err := pgxpool.New(context.Background(), dbUrl)
 	if err != nil {
 		return nil, err
 	}
