@@ -6,7 +6,7 @@ tasks:
   clean:ports:
     desc: Kill processes using service ports
     cmds:
-      - lsof -ti :8080,50051,50052 | xargs kill -9 || true
+      - lsof -ti :8080,50051,50052,50053 | xargs kill -9 || true
 
   infra:
     desc: Start infrastructure (colima + docker)
@@ -24,12 +24,19 @@ tasks:
     desc: Run all services locally
     deps:
       - dev:gateway
+      - dev:tenant
       - dev:user
       - dev:hr
 
   dev:gateway:
     desc: Run API Gateway
     dir: services/api-gateway
+    cmds:
+      - go run ./cmd/server
+
+  dev:tenant:
+    desc: Run Tenant Service
+    dir: services/tenant-service
     cmds:
       - go run ./cmd/server
 
@@ -53,6 +60,7 @@ tasks:
   sqlc:
     desc: Generate SQLC code
     cmds:
+      - sqlc generate -f services/tenant-service/db/sqlc.yaml
       - sqlc generate -f services/user-service/db/sqlc.yaml
       - sqlc generate -f services/hr-service/db/sqlc.yaml
 
@@ -60,6 +68,7 @@ tasks:
     desc: Go mod tidy all services
     cmds:
       - cd services/api-gateway && go mod tidy
+      - cd services/tenant-service && go mod tidy
       - cd services/user-service && go mod tidy
       - cd services/hr-service && go mod tidy
 

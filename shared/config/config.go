@@ -9,6 +9,7 @@ type Config struct {
 	ServerHost string
 
 	ApiGatewayPort  string
+	TenantServicePort string
 	UserServicePort string
 	HRServicePort   string
 
@@ -38,6 +39,7 @@ func Load() *Config {
 		ServerHost: viper.GetString("SERVER_HOST"),
 
 		ApiGatewayPort:  viper.GetString("API_GATEWAY_PORT"),
+		TenantServicePort: viper.GetString("TENANT_SERVICE_PORT"),
 		UserServicePort: viper.GetString("USER_SERVICE_PORT"),
 		HRServicePort:   viper.GetString("HR_SERVICE_PORT"),
 

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package tenant.tenant.v1;
+
+option go_package = "coraflow-erp-api/proto/tenant/tenant/v1;tenantpb";
+
+service TenantService {
+  rpc Info(InfoRequest) returns (InfoResponse);
+}
+
+message InfoRequest {
+  string id = 1;
+}
+
+message InfoResponse {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+}
