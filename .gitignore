@@ -1,0 +1,57 @@
+# ======================
+# Go binaries and build artifacts
+# ======================
+**/bin/
+**/build/
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
+
+# ======================
+# Go modules
+# ======================
+# Keep go.mod/go.sum under version control
+# Ignore local module cache (optional)
+/vendor/
+
+# ======================
+# Environment and secret files
+# ======================
+**/.env
+**/.env.*
+
+# ======================
+# Logs
+# ======================
+**/*.log
+**/logs/
+
+# ======================
+# IDE/editor files
+# ======================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ======================
+# OS generated files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Test coverage and temporary files
+# ======================
+coverage.out
+*.test
+*.tmp
+
+# ======================
+# Docker (if you use Docker for microservices)
+# ======================
+**/docker-compose.override.yml
+**/docker-compose.override.yaml
+**/.docker/
+**/Dockerfile.*
