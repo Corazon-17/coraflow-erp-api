@@ -1,19 +1,73 @@
 syntax = "proto3";
 
-package tenant.tenant.v1;
+package tenant.v1;
 
-option go_package = "coraflow-erp-api/proto/tenant/tenant/v1;tenantpb";
+option go_package = "coraflow-erp-api/proto/tenant/v1";
 
 service TenantService {
-  rpc Info(InfoRequest) returns (InfoResponse);
+
+  rpc CreateTenant(CreateTenantRequest)
+    returns (TenantResponse);
+
+  rpc GetTenant(GetTenantRequest)
+    returns (TenantResponse);
+
+  rpc GetTenantBySlug(GetTenantBySlugRequest)
+    returns (TenantResponse);
+
+  rpc ListTenants(ListTenantsRequest)
+    returns (ListTenantsResponse);
+
+  rpc DeleteTenant(DeleteTenantRequest)
+    returns (DeleteTenantResponse);
 }
 
-message InfoRequest {
-  string id = 1;
-}
+message Tenant {
 
-message InfoResponse {
   string id = 1;
+
   string name = 2;
+
   string slug = 3;
+
+  string created_at = 4;
+}
+
+message CreateTenantRequest {
+
+  string name = 1;
+
+  string slug = 2;
+}
+
+message TenantResponse {
+
+  Tenant tenant = 1;
+}
+
+message GetTenantRequest {
+
+  string id = 1;
+}
+
+message GetTenantBySlugRequest {
+
+  string slug = 1;
+}
+
+message ListTenantsRequest {}
+
+message ListTenantsResponse {
+
+  repeated Tenant tenants = 1;
+}
+
+message DeleteTenantRequest {
+
+  string id = 1;
+}
+
+message DeleteTenantResponse {
+
+  bool success = 1;
 }
