@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gofiber/fiber/v3"
-
 	"coraflow-erp-api/services/api-gateway/internal/client"
 	"coraflow-erp-api/services/api-gateway/internal/handler"
+	"coraflow-erp-api/services/api-gateway/internal/route"
 	"coraflow-erp-api/shared/config"
+
+	"github.com/gofiber/fiber/v3"
 )
 
 func main() {
@@ -17,20 +18,33 @@ func main() {
 
 	app := fiber.New()
 
-	authClient, err := client.NewAuthClient(cfg)
+	tenantClient, err := client.NewTenantClient(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	authHandler := handler.NewAuthHandler(authClient)
+	userClient, err := client.NewUserClient(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	app.Post("/login", authHandler.Login)
+	hrClient, err := client.NewHRClient(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	app.Get("/health", func(c fiber.Ctx) error {
-		return c.JSON(fiber.Map{
-			"status": "ok",
-		})
-	})
+	authHandler := handler.NewAuthHandler(userClient)
+	tenantHandler := handler.NewTenantHandler(tenantClient)
+	departmentHandler := handler.NewDepartmentHandler(hrClient)
+	employeeHandler := handler.NewEmployeeHandler(hrClient)
+
+	route.RegisterRoutes(
+		app,
+		authHandler,
+		tenantHandler,
+		departmentHandler,
+		employeeHandler,
+	)
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%s", cfg.ApiGatewayPort)))
 }

@@ -4,34 +4,28 @@ import (
 	"context"
 
 	authpb "coraflow-erp-api/proto/user/auth/v1"
+	"coraflow-erp-api/services/api-gateway/internal/client"
 
 	"github.com/gofiber/fiber/v3"
 )
 
 type AuthHandler struct {
-	client authpb.AuthServiceClient
+	userClient *client.UserClient
 }
 
-func NewAuthHandler(c authpb.AuthServiceClient) *AuthHandler {
-	return &AuthHandler{client: c}
+func NewAuthHandler(c *client.UserClient) *AuthHandler {
+	return &AuthHandler{userClient: c}
 }
 
 func (h *AuthHandler) Login(c fiber.Ctx) error {
 
-	req := new(struct {
-		Email string `json:"email"`
-		Password string `json:"password"`
-	})
+	req := new(authpb.LoginRequest)
 
 	if err := c.Bind().Body(req); err != nil {
 		return err
 	}
 
-	res, err := h.client.Login(context.Background(), &authpb.LoginRequest{
-		Email: req.Email,
-		Password: req.Password,
-	})
-
+	res, err := h.userClient.Auth.Login(context.Background(), req)
 	if err != nil {
 		return err
 	}
