@@ -11,14 +11,14 @@ tasks:
   infra:
     desc: Start infrastructure (colima + docker)
     cmds:
-      # - colima start
-      - docker compose -f deployments/docker-compose.yml up -d
+      - colima start
+      - docker compose up -d
 
   infra:stop:
     desc: Stop infrastructure
     cmds:
-      - docker compose -f deployments/docker-compose.yml down
-      # - colima stop
+      - docker compose down
+      - colima stop
 
   dev:
     desc: Run all services locally

@@ -1,29 +1,17 @@
 services:
-  postgres-user:
+  postgres:
     image: postgres:18
-    container_name: postgres-user
-    restart: always
+    container_name: erp-postgres
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: user_db
+      POSTGRES_DB: erp_main
     ports:
       - "5432:5432"
     volumes:
-      - postgres_user:/var/lib/postgresql/data
-
-  postgres-hr:
-    image: postgres:18
-    container_name: postgres-hr
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: hr_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_hr:/var/lib/postgresql/data
+      - postgres_erp:/var/lib/postgresql
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     image: redis:8
@@ -45,7 +33,6 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
-  postgres_user:
-  postgres_hr:
+  postgres_erp:
   redis_data:
   rabbitmq_data:

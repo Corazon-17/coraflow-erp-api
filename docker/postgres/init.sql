@@ -1,0 +1,3 @@
+CREATE DATABASE tenant_db;
+CREATE DATABASE user_db;
+CREATE DATABASE hr_db;
