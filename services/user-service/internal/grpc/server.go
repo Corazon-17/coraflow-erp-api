@@ -1,33 +1,27 @@
 package grpc
 
 import (
-	authpb "coraflow-erp-api/proto/user/auth/v1"
+	"fmt"
 	"net"
 
 	"google.golang.org/grpc"
+
+	authpb "coraflow-erp-api/proto/user/auth/v1"
+	userpb "coraflow-erp-api/proto/user/user/v1"
+
+	"coraflow-erp-api/services/user-service/internal/grpc/handler"
 )
 
-type Server struct {
-	authpb.UnimplementedAuthServiceServer
-}
+func Start(port string, userHandler *handler.UserHandler, authHandler *handler.AuthHandler) error {
+	server := grpc.NewServer()
 
-func NewServer() *grpc.Server {
+	userpb.RegisterUserServiceServer(server, userHandler)
+	authpb.RegisterAuthServiceServer(server, authHandler)
 
-	s := grpc.NewServer()
-
-	authpb.RegisterAuthServiceServer(s, &Server{})
-
-	return s
-}
-
-func Start(port string) error {
-
-	lis, err := net.Listen("tcp", port)
+	l, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		return err
 	}
 
-	s := NewServer()
-
-	return s.Serve(lis)
+	return server.Serve(l)
 }

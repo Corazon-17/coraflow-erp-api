@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package user.user.v1;
+
+option go_package = "coraflow-erp-api/proto/user/user/v1;userpb";
+
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (UserResponse);
+}
+
+message CreateUserRequest {
+  string tenant_id = 1;
+  string email = 2;
+  string password = 3;
+  bool is_internal = 4;
+}
+
+message UserResponse {
+  string id = 1;
+  string email = 2;
+}

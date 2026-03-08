@@ -1,19 +1,62 @@
 syntax = "proto3";
 
-package hr.employee.v1;
+package hr.v1;
 
-option go_package = "coraflow-erp-api/proto/hr/employee/v1;employeepb";
+option go_package = "coraflow-erp-api/proto/hr/v1;hrpb";
 
 service EmployeeService {
-  rpc GetEmployee(GetEmployeeRequest) returns (EmployeeResponse);
+  rpc CreateEmployee (CreateEmployeeRequest)
+      returns (EmployeeResponse);
+
+  rpc GetEmployee (GetEmployeeRequest)
+      returns (EmployeeResponse);
+
+  rpc ListEmployee (ListEmployeeRequest)
+      returns (ListEmployeeResponse);
+
+  rpc DeleteEmployee (DeleteEmployeeRequest)
+      returns (DeleteEmployeeResponse);
 }
 
-message GetEmployeeRequest {
-  string id = 1;
-}
+
 
 message EmployeeResponse {
   string id = 1;
+  string tenant_id = 2;
+  string first_name = 3;
+  string last_name = 4;
+}
+
+
+message ListEmployeeResponse {
+  repeated EmployeeResponse employees = 1;
+}
+
+
+message CreateEmployeeRequest {
+  string tenant_id = 1;
   string first_name = 2;
   string last_name = 3;
+}
+
+
+message GetEmployeeRequest {
+  string tenant_id = 1;
+  string id = 2;
+}
+
+
+message ListEmployeeRequest {
+  string tenant_id = 1;
+}
+
+
+message DeleteEmployeeRequest {
+  string tenant_id = 1;
+  string id = 2;
+}
+
+
+message DeleteEmployeeResponse {
+  bool success = 1;
 }

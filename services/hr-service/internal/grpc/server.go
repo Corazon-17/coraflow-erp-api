@@ -1,39 +1,27 @@
 package grpc
 
 import (
+	"fmt"
 	"net"
 
 	departmentpb "coraflow-erp-api/proto/hr/department/v1"
 	employeepb "coraflow-erp-api/proto/hr/employee/v1"
+	"coraflow-erp-api/services/hr-service/internal/grpc/handler"
 
 	"google.golang.org/grpc"
 )
 
-type Server struct {
-	employeepb.UnimplementedEmployeeServiceServer
-	departmentpb.UnimplementedDepartmentServiceServer
-}
+func Start(port string, departmentHandler *handler.DepartmentHandler, employeeHandler *handler.EmployeeHandler) error {
 
-func NewServer() *grpc.Server {
+	server := grpc.NewServer()
 
-	s := grpc.NewServer()
+	departmentpb.RegisterDepartmentServiceServer(server, departmentHandler)
+	employeepb.RegisterEmployeeServiceServer(server, employeeHandler)
 
-	handler := &Server{}
-
-	employeepb.RegisterEmployeeServiceServer(s, handler)
-	departmentpb.RegisterDepartmentServiceServer(s, handler)
-
-	return s
-}
-
-func Start(port string) error {
-
-	lis, err := net.Listen("tcp", port)
+	l, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		return err
 	}
 
-	s := NewServer()
-
-	return s.Serve(lis)
+	return server.Serve(l)
 }

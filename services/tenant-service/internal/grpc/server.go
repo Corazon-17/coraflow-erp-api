@@ -1,33 +1,25 @@
 package grpc
 
 import (
-	tenantpb "coraflow-erp-api/proto/tenant/tenant/v1"
+	"fmt"
 	"net"
+
+	tenantpb "coraflow-erp-api/proto/tenant/tenant/v1"
+	"coraflow-erp-api/services/tenant-service/internal/grpc/handler"
 
 	"google.golang.org/grpc"
 )
 
-type Server struct {
-	tenantpb.UnimplementedTenantServiceServer
-}
+func Start(port string, tenantHandler *handler.TenantHandler) error {
 
-func NewServer() *grpc.Server {
+	server := grpc.NewServer()
 
-	s := grpc.NewServer()
+	tenantpb.RegisterTenantServiceServer(server, tenantHandler)
 
-	tenantpb.RegisterTenantServiceServer(s, &Server{})
-
-	return s
-}
-
-func Start(port string) error {
-
-	lis, err := net.Listen("tcp", port)
+	l, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		return err
 	}
 
-	s := NewServer()
-
-	return s.Serve(lis)
+	return server.Serve(l)
 }

@@ -1,20 +1,62 @@
 syntax = "proto3";
 
-package hr.department.v1;
+package hr.v1;
 
-option go_package = "coraflow-erp-api/proto/hr/department/v1;departmentpb";
+option go_package = "coraflow-erp-api/proto/hr/v1;hrpb";
 
 service DepartmentService {
-  rpc ListDepartments(ListDepartmentsRequest) returns (ListDepartmentsResponse);
+
+  rpc CreateDepartment (CreateDepartmentRequest)
+      returns (DepartmentResponse);
+
+  rpc GetDepartment (GetDepartmentRequest)
+      returns (DepartmentResponse);
+
+  rpc ListDepartment (ListDepartmentRequest)
+      returns (ListDepartmentResponse);
+
+  rpc DeleteDepartment (DeleteDepartmentRequest)
+      returns (DeleteDepartmentResponse);
 }
 
-message ListDepartmentsRequest {}
 
-message Department {
+
+message DepartmentResponse {
   string id = 1;
-  string name = 2;
+  string tenant_id = 2;
+  string name = 3;
 }
 
-message ListDepartmentsResponse {
-  repeated Department departments = 1;
+
+message ListDepartmentResponse {
+  repeated DepartmentResponse departments = 1;
+}
+
+
+message CreateDepartmentRequest {
+  string tenant_id = 1;
+  string name = 2;
+  optional string parent_id = 3;
+}
+
+
+message GetDepartmentRequest {
+  string tenant_id = 1;
+  string id = 2;
+}
+
+
+message ListDepartmentRequest {
+  string tenant_id = 1;
+}
+
+
+message DeleteDepartmentRequest {
+  string tenant_id = 1;
+  string id = 2;
+}
+
+
+message DeleteDepartmentResponse {
+  bool success = 1;
 }

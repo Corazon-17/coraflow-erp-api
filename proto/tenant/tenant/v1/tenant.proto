@@ -15,8 +15,8 @@ service TenantService {
   rpc GetTenantBySlug(GetTenantBySlugRequest)
     returns (TenantResponse);
 
-  rpc ListTenants(ListTenantsRequest)
-    returns (ListTenantsResponse);
+  rpc ListTenants(ListTenantRequest)
+    returns (ListTenantResponse);
 
   rpc DeleteTenant(DeleteTenantRequest)
     returns (DeleteTenantResponse);
@@ -55,9 +55,9 @@ message GetTenantBySlugRequest {
   string slug = 1;
 }
 
-message ListTenantsRequest {}
+message ListTenantRequest {}
 
-message ListTenantsResponse {
+message ListTenantResponse {
 
   repeated Tenant tenants = 1;
 }

@@ -1,4 +1,4 @@
-package handlers
+package handler
 
 import (
 	"context"
@@ -24,10 +24,48 @@ func (h *TenantHandler) CreateTenant(ctx context.Context, req *tenantpb.CreateTe
 	}
 
 	return &tenantpb.TenantResponse{
-	Tenant: &tenantpb.Tenant{
-		Id:   t.ID.String(),
-		Name: t.Name,
-		Slug: t.Slug,
-	},
-}, nil
+		Tenant: &tenantpb.Tenant{
+			Id:   t.ID.String(),
+			Name: t.Name,
+			Slug: t.Slug,
+		},
+	}, nil
+}
+
+func (h *TenantHandler) GetTenant(ctx context.Context, req *tenantpb.GetTenantRequest) (*tenantpb.TenantResponse, error) {
+
+	t, err := h.service.GetTenant(ctx, req.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &tenantpb.TenantResponse{
+		Tenant: &tenantpb.Tenant{
+			Id:   t.ID.String(),
+			Name: t.Name,
+			Slug: t.Slug,
+		},
+	}, nil
+}
+
+func (h *TenantHandler) ListTenant(ctx context.Context, req *tenantpb.ListTenantRequest) (*tenantpb.ListTenantResponse, error) {
+
+	list, err := h.service.ListTenant(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*tenantpb.Tenant, 0)
+
+	for _, t := range list {
+		res = append(res, &tenantpb.Tenant{
+			Id:   t.ID.String(),
+			Name: t.Name,
+			Slug: t.Slug,
+		})
+	}
+
+	return &tenantpb.ListTenantResponse{
+		Tenants: res,
+	}, nil
 }

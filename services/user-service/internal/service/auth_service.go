@@ -11,20 +11,20 @@ import (
 )
 
 type AuthService struct {
-	repo *repository.UserRepository
+	repo      *repository.UserRepository
 	jwtSecret string
 }
 
 func NewAuthService(repo *repository.UserRepository, secret string) *AuthService {
 	return &AuthService{
-		repo: repo,
+		repo:      repo,
 		jwtSecret: secret,
 	}
 }
 
 func (s *AuthService) Login(ctx context.Context, email, password string) (string, error) {
 
-	user, err := s.repo.GetUserByEmail(ctx, email)
+	user, err := s.repo.GetByEmail(ctx, email)
 	if err != nil {
 		return "", err
 	}
@@ -41,8 +41,8 @@ func (s *AuthService) Login(ctx context.Context, email, password string) (string
 	}
 
 	token, err := jwt.Generate(s.jwtSecret, jwt.Claims{
-		UserID: user.ID.String(),
-		TenantID: tenantID,
+		UserID:     user.ID.String(),
+		TenantID:   tenantID,
 		IsInternal: user.IsInternal,
 	})
 
