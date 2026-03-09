@@ -20,7 +20,6 @@ func NewAuthHandler(c *client.UserClient) *AuthHandler {
 func (h *AuthHandler) Login(c fiber.Ctx) error {
 
 	req := new(authpb.LoginRequest)
-
 	if err := c.Bind().Body(req); err != nil {
 		return err
 	}

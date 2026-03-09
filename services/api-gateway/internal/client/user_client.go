@@ -18,7 +18,7 @@ type UserClient struct {
 func NewUserClient(cfg *config.Config) (*UserClient, error) {
 
 	conn, err := grpc.NewClient(
-		fmt.Sprintf("%s:%s", cfg.ServerHost, cfg.TenantServicePort),
+		fmt.Sprintf("%s:%s", cfg.ServerHost, cfg.UserServicePort),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {

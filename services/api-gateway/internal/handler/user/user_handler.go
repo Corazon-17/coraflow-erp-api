@@ -20,7 +20,6 @@ func NewUserHandler(c *client.UserClient) *UserHandler {
 func (h *UserHandler) Create(c fiber.Ctx) error {
 
 	req := new(userpb.CreateUserRequest)
-
 	if err := c.Bind().Body(req); err != nil {
 		return err
 	}

@@ -5,6 +5,7 @@ import (
 
 	tenantpb "coraflow-erp-api/proto/tenant/tenant/v1"
 	"coraflow-erp-api/services/tenant-service/internal/service"
+	"coraflow-erp-api/shared/utils"
 )
 
 type TenantHandler struct {
@@ -48,9 +49,9 @@ func (h *TenantHandler) GetTenant(ctx context.Context, req *tenantpb.GetTenantRe
 	}, nil
 }
 
-func (h *TenantHandler) ListTenant(ctx context.Context, req *tenantpb.ListTenantRequest) (*tenantpb.ListTenantResponse, error) {
+func (h *TenantHandler) ListTenants(ctx context.Context, req *tenantpb.ListTenantRequest) (*tenantpb.ListTenantResponse, error) {
 
-	list, err := h.service.ListTenant(ctx)
+	list, err := h.service.ListTenants(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -67,5 +68,21 @@ func (h *TenantHandler) ListTenant(ctx context.Context, req *tenantpb.ListTenant
 
 	return &tenantpb.ListTenantResponse{
 		Tenants: res,
+	}, nil
+}
+
+func (h *TenantHandler) DeleteTenant(ctx context.Context, req *tenantpb.DeleteTenantRequest) (*tenantpb.DeleteTenantResponse, error) {
+
+	tenantId, err := utils.ToUUID(req.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := h.service.DeleteTenant(ctx, tenantId); err != nil {
+		return nil, err
+	}
+
+	return &tenantpb.DeleteTenantResponse{
+		Success: true,
 	}, nil
 }

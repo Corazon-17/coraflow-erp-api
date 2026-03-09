@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package tenant.v1;
+package tenant.tenant.v1;
 
-option go_package = "coraflow-erp-api/proto/tenant/v1";
+option go_package = "coraflow-erp-api/proto/tenant/v1;tenantpb";
 
 service TenantService {
 

@@ -6,23 +6,19 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func RegisterHRRoutes(
-	app fiber.Router,
-	dept *hr.DepartmentHandler,
-	emp *hr.EmployeeHandler,
-) {
+func RegisterHRRoutes(router fiber.Router, dept *hr.DepartmentHandler, emp *hr.EmployeeHandler) {
 
-	department := app.Group("/departments")
+	department := router.Group("departments")
 
-	department.Post("/", dept.Create)
-	department.Get("/", dept.List)
-	department.Get("/:id", dept.Get)
-	department.Delete("/:id", dept.Delete)
+	department.Post("", dept.Create)
+	department.Get("", dept.List)
+	department.Get(":id", dept.Get)
+	department.Delete(":id", dept.Delete)
 
-	employee := app.Group("/employees")
+	employee := router.Group("employees")
 
-	employee.Post("/", emp.Create)
-	employee.Get("/", emp.List)
-	employee.Get("/:id", emp.Get)
-	employee.Delete("/:id", emp.Delete)
+	employee.Post("", emp.Create)
+	employee.Get("", emp.List)
+	employee.Get(":id", emp.Get)
+	employee.Delete(":id", emp.Delete)
 }

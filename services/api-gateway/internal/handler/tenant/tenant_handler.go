@@ -25,7 +25,7 @@ func (h *Handler) Create(c fiber.Ctx) error {
 		return err
 	}
 
-	res, err := h.client.Client.CreateTenant(context.Background(), req)
+	res, err := h.client.Tenant.CreateTenant(context.Background(), req)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (h *Handler) Get(c fiber.Ctx) error {
 
 	id := c.Params("id")
 
-	res, err := h.client.Client.GetTenant(context.Background(),
+	res, err := h.client.Tenant.GetTenant(context.Background(),
 		&tenantpb.GetTenantRequest{
 			Id: id,
 		})
@@ -50,7 +50,7 @@ func (h *Handler) Get(c fiber.Ctx) error {
 
 func (h *Handler) List(c fiber.Ctx) error {
 
-	res, err := h.client.Client.ListTenants(context.Background(), &tenantpb.ListTenantRequest{})
+	res, err := h.client.Tenant.ListTenants(context.Background(), &tenantpb.ListTenantRequest{})
 	if err != nil {
 		return err
 	}
@@ -62,7 +62,7 @@ func (h *Handler) Delete(c fiber.Ctx) error {
 
 	id := c.Params("id")
 
-	res, err := h.client.Client.DeleteTenant(context.Background(),
+	res, err := h.client.Tenant.DeleteTenant(context.Background(),
 		&tenantpb.DeleteTenantRequest{
 			Id: id,
 		})

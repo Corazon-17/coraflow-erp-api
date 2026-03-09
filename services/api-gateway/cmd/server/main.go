@@ -24,7 +24,7 @@ func main() {
 	})
 	app.Use(cors.New(cors.Config{
 		AllowMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
-		AllowOrigins: []string{"*"},
+		AllowOrigins: []string{"http://localhost:3000"},
 	}))
 
 	tenantClient, err := client.NewTenantClient(cfg)

@@ -5,7 +5,6 @@ import (
 
 	"coraflow-erp-api/services/user-service/internal/repository"
 	"coraflow-erp-api/shared/jwt"
-	"coraflow-erp-api/shared/utils"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -34,15 +33,15 @@ func (s *AuthService) Login(ctx context.Context, email, password string) (string
 		return "", err
 	}
 
-	var tenantID *string
-	if utils.IsValidUUID(user.TenantID.String()) {
+	var tenantID string
+	if user.TenantID != nil {
 		id := user.TenantID.String()
-		tenantID = &id
+		tenantID = id
 	}
 
 	token, err := jwt.Generate(s.jwtSecret, jwt.Claims{
 		UserID:     user.ID.String(),
-		TenantID:   tenantID,
+		TenantID:   &tenantID,
 		IsInternal: user.IsInternal,
 	})
 

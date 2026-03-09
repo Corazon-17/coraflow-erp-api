@@ -18,7 +18,7 @@ type HRClient struct {
 func NewHRClient(cfg *config.Config) (*HRClient, error) {
 
 	conn, err := grpc.NewClient(
-		fmt.Sprintf("%s:%s", cfg.ServerHost, cfg.TenantServicePort),
+		fmt.Sprintf("%s:%s", cfg.ServerHost, cfg.HRServicePort),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {

@@ -10,7 +10,7 @@ import (
 )
 
 type TenantClient struct {
-	Client tenantpb.TenantServiceClient
+	Tenant tenantpb.TenantServiceClient
 }
 
 func NewTenantClient(cfg *config.Config) (*TenantClient, error) {
@@ -23,7 +23,7 @@ func NewTenantClient(cfg *config.Config) (*TenantClient, error) {
 		return nil, err
 	}
 
-	client := tenantpb.NewTenantServiceClient(conn)
-
-	return &TenantClient{Client: client}, nil
+	return &TenantClient{
+		Tenant: tenantpb.NewTenantServiceClient(conn),
+	}, nil
 }

@@ -4,7 +4,7 @@
 // 	protoc        v7.34.0
 // source: proto/tenant/tenant/v1/tenant.proto
 
-package v1
+package tenantpb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -445,7 +445,7 @@ var File_proto_tenant_tenant_v1_tenant_proto protoreflect.FileDescriptor
 
 const file_proto_tenant_tenant_v1_tenant_proto_rawDesc = "" +
 	"\n" +
-	"#proto/tenant/tenant/v1/tenant.proto\x12\ttenant.v1\"_\n" +
+	"#proto/tenant/tenant/v1/tenant.proto\x12\x10tenant.tenant.v1\"_\n" +
 	"\x06Tenant\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -454,26 +454,26 @@ const file_proto_tenant_tenant_v1_tenant_proto_rawDesc = "" +
 	"created_at\x18\x04 \x01(\tR\tcreatedAt\"=\n" +
 	"\x13CreateTenantRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
-	"\x04slug\x18\x02 \x01(\tR\x04slug\";\n" +
-	"\x0eTenantResponse\x12)\n" +
-	"\x06tenant\x18\x01 \x01(\v2\x11.tenant.v1.TenantR\x06tenant\"\"\n" +
+	"\x04slug\x18\x02 \x01(\tR\x04slug\"B\n" +
+	"\x0eTenantResponse\x120\n" +
+	"\x06tenant\x18\x01 \x01(\v2\x18.tenant.tenant.v1.TenantR\x06tenant\"\"\n" +
 	"\x10GetTenantRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\",\n" +
 	"\x16GetTenantBySlugRequest\x12\x12\n" +
 	"\x04slug\x18\x01 \x01(\tR\x04slug\"\x13\n" +
-	"\x11ListTenantRequest\"A\n" +
-	"\x12ListTenantResponse\x12+\n" +
-	"\atenants\x18\x01 \x03(\v2\x11.tenant.v1.TenantR\atenants\"%\n" +
+	"\x11ListTenantRequest\"H\n" +
+	"\x12ListTenantResponse\x122\n" +
+	"\atenants\x18\x01 \x03(\v2\x18.tenant.tenant.v1.TenantR\atenants\"%\n" +
 	"\x13DeleteTenantRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"0\n" +
 	"\x14DeleteTenantResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x8d\x03\n" +
-	"\rTenantService\x12I\n" +
-	"\fCreateTenant\x12\x1e.tenant.v1.CreateTenantRequest\x1a\x19.tenant.v1.TenantResponse\x12C\n" +
-	"\tGetTenant\x12\x1b.tenant.v1.GetTenantRequest\x1a\x19.tenant.v1.TenantResponse\x12O\n" +
-	"\x0fGetTenantBySlug\x12!.tenant.v1.GetTenantBySlugRequest\x1a\x19.tenant.v1.TenantResponse\x12J\n" +
-	"\vListTenants\x12\x1c.tenant.v1.ListTenantRequest\x1a\x1d.tenant.v1.ListTenantResponse\x12O\n" +
-	"\fDeleteTenant\x12\x1e.tenant.v1.DeleteTenantRequest\x1a\x1f.tenant.v1.DeleteTenantResponseB\"Z coraflow-erp-api/proto/tenant/v1b\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xd3\x03\n" +
+	"\rTenantService\x12W\n" +
+	"\fCreateTenant\x12%.tenant.tenant.v1.CreateTenantRequest\x1a .tenant.tenant.v1.TenantResponse\x12Q\n" +
+	"\tGetTenant\x12\".tenant.tenant.v1.GetTenantRequest\x1a .tenant.tenant.v1.TenantResponse\x12]\n" +
+	"\x0fGetTenantBySlug\x12(.tenant.tenant.v1.GetTenantBySlugRequest\x1a .tenant.tenant.v1.TenantResponse\x12X\n" +
+	"\vListTenants\x12#.tenant.tenant.v1.ListTenantRequest\x1a$.tenant.tenant.v1.ListTenantResponse\x12]\n" +
+	"\fDeleteTenant\x12%.tenant.tenant.v1.DeleteTenantRequest\x1a&.tenant.tenant.v1.DeleteTenantResponseB+Z)coraflow-erp-api/proto/tenant/v1;tenantpbb\x06proto3"
 
 var (
 	file_proto_tenant_tenant_v1_tenant_proto_rawDescOnce sync.Once
@@ -489,29 +489,29 @@ func file_proto_tenant_tenant_v1_tenant_proto_rawDescGZIP() []byte {
 
 var file_proto_tenant_tenant_v1_tenant_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_proto_tenant_tenant_v1_tenant_proto_goTypes = []any{
-	(*Tenant)(nil),                 // 0: tenant.v1.Tenant
-	(*CreateTenantRequest)(nil),    // 1: tenant.v1.CreateTenantRequest
-	(*TenantResponse)(nil),         // 2: tenant.v1.TenantResponse
-	(*GetTenantRequest)(nil),       // 3: tenant.v1.GetTenantRequest
-	(*GetTenantBySlugRequest)(nil), // 4: tenant.v1.GetTenantBySlugRequest
-	(*ListTenantRequest)(nil),      // 5: tenant.v1.ListTenantRequest
-	(*ListTenantResponse)(nil),     // 6: tenant.v1.ListTenantResponse
-	(*DeleteTenantRequest)(nil),    // 7: tenant.v1.DeleteTenantRequest
-	(*DeleteTenantResponse)(nil),   // 8: tenant.v1.DeleteTenantResponse
+	(*Tenant)(nil),                 // 0: tenant.tenant.v1.Tenant
+	(*CreateTenantRequest)(nil),    // 1: tenant.tenant.v1.CreateTenantRequest
+	(*TenantResponse)(nil),         // 2: tenant.tenant.v1.TenantResponse
+	(*GetTenantRequest)(nil),       // 3: tenant.tenant.v1.GetTenantRequest
+	(*GetTenantBySlugRequest)(nil), // 4: tenant.tenant.v1.GetTenantBySlugRequest
+	(*ListTenantRequest)(nil),      // 5: tenant.tenant.v1.ListTenantRequest
+	(*ListTenantResponse)(nil),     // 6: tenant.tenant.v1.ListTenantResponse
+	(*DeleteTenantRequest)(nil),    // 7: tenant.tenant.v1.DeleteTenantRequest
+	(*DeleteTenantResponse)(nil),   // 8: tenant.tenant.v1.DeleteTenantResponse
 }
 var file_proto_tenant_tenant_v1_tenant_proto_depIdxs = []int32{
-	0, // 0: tenant.v1.TenantResponse.tenant:type_name -> tenant.v1.Tenant
-	0, // 1: tenant.v1.ListTenantResponse.tenants:type_name -> tenant.v1.Tenant
-	1, // 2: tenant.v1.TenantService.CreateTenant:input_type -> tenant.v1.CreateTenantRequest
-	3, // 3: tenant.v1.TenantService.GetTenant:input_type -> tenant.v1.GetTenantRequest
-	4, // 4: tenant.v1.TenantService.GetTenantBySlug:input_type -> tenant.v1.GetTenantBySlugRequest
-	5, // 5: tenant.v1.TenantService.ListTenants:input_type -> tenant.v1.ListTenantRequest
-	7, // 6: tenant.v1.TenantService.DeleteTenant:input_type -> tenant.v1.DeleteTenantRequest
-	2, // 7: tenant.v1.TenantService.CreateTenant:output_type -> tenant.v1.TenantResponse
-	2, // 8: tenant.v1.TenantService.GetTenant:output_type -> tenant.v1.TenantResponse
-	2, // 9: tenant.v1.TenantService.GetTenantBySlug:output_type -> tenant.v1.TenantResponse
-	6, // 10: tenant.v1.TenantService.ListTenants:output_type -> tenant.v1.ListTenantResponse
-	8, // 11: tenant.v1.TenantService.DeleteTenant:output_type -> tenant.v1.DeleteTenantResponse
+	0, // 0: tenant.tenant.v1.TenantResponse.tenant:type_name -> tenant.tenant.v1.Tenant
+	0, // 1: tenant.tenant.v1.ListTenantResponse.tenants:type_name -> tenant.tenant.v1.Tenant
+	1, // 2: tenant.tenant.v1.TenantService.CreateTenant:input_type -> tenant.tenant.v1.CreateTenantRequest
+	3, // 3: tenant.tenant.v1.TenantService.GetTenant:input_type -> tenant.tenant.v1.GetTenantRequest
+	4, // 4: tenant.tenant.v1.TenantService.GetTenantBySlug:input_type -> tenant.tenant.v1.GetTenantBySlugRequest
+	5, // 5: tenant.tenant.v1.TenantService.ListTenants:input_type -> tenant.tenant.v1.ListTenantRequest
+	7, // 6: tenant.tenant.v1.TenantService.DeleteTenant:input_type -> tenant.tenant.v1.DeleteTenantRequest
+	2, // 7: tenant.tenant.v1.TenantService.CreateTenant:output_type -> tenant.tenant.v1.TenantResponse
+	2, // 8: tenant.tenant.v1.TenantService.GetTenant:output_type -> tenant.tenant.v1.TenantResponse
+	2, // 9: tenant.tenant.v1.TenantService.GetTenantBySlug:output_type -> tenant.tenant.v1.TenantResponse
+	6, // 10: tenant.tenant.v1.TenantService.ListTenants:output_type -> tenant.tenant.v1.ListTenantResponse
+	8, // 11: tenant.tenant.v1.TenantService.DeleteTenant:output_type -> tenant.tenant.v1.DeleteTenantResponse
 	7, // [7:12] is the sub-list for method output_type
 	2, // [2:7] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

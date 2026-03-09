@@ -19,13 +19,9 @@ func NewUserHandler(s *service.UserService) *UserHandler {
 	return &UserHandler{service: s}
 }
 
-func (h *UserHandler) CreateUser(
-	ctx context.Context,
-	req *userpb.CreateUserRequest,
-) (*userpb.UserResponse, error) {
+func (h *UserHandler) CreateUser(ctx context.Context, req *userpb.CreateUserRequest) (*userpb.UserResponse, error) {
 
 	var tenantUUID *uuid.UUID
-
 	if req.TenantId != "" {
 		id, err := utils.ToUUID(req.TenantId)
 		if err != nil {
@@ -34,14 +30,7 @@ func (h *UserHandler) CreateUser(
 		tenantUUID = &id
 	}
 
-	u, err := h.service.CreateUser(
-		ctx,
-		req.Email,
-		req.Password,
-		tenantUUID,
-		req.IsInternal,
-	)
-
+	u, err := h.service.CreateUser(ctx, req.Email, req.Password, tenantUUID, req.IsInternal)
 	if err != nil {
 		return nil, err
 	}

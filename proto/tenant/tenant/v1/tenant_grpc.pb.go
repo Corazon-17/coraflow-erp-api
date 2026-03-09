@@ -4,7 +4,7 @@
 // - protoc             v7.34.0
 // source: proto/tenant/tenant/v1/tenant.proto
 
-package v1
+package tenantpb
 
 import (
 	context "context"
@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TenantService_CreateTenant_FullMethodName    = "/tenant.v1.TenantService/CreateTenant"
-	TenantService_GetTenant_FullMethodName       = "/tenant.v1.TenantService/GetTenant"
-	TenantService_GetTenantBySlug_FullMethodName = "/tenant.v1.TenantService/GetTenantBySlug"
-	TenantService_ListTenants_FullMethodName     = "/tenant.v1.TenantService/ListTenants"
-	TenantService_DeleteTenant_FullMethodName    = "/tenant.v1.TenantService/DeleteTenant"
+	TenantService_CreateTenant_FullMethodName    = "/tenant.tenant.v1.TenantService/CreateTenant"
+	TenantService_GetTenant_FullMethodName       = "/tenant.tenant.v1.TenantService/GetTenant"
+	TenantService_GetTenantBySlug_FullMethodName = "/tenant.tenant.v1.TenantService/GetTenantBySlug"
+	TenantService_ListTenants_FullMethodName     = "/tenant.tenant.v1.TenantService/ListTenants"
+	TenantService_DeleteTenant_FullMethodName    = "/tenant.tenant.v1.TenantService/DeleteTenant"
 )
 
 // TenantServiceClient is the client API for TenantService service.
@@ -244,7 +244,7 @@ func _TenantService_DeleteTenant_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TenantService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "tenant.v1.TenantService",
+	ServiceName: "tenant.tenant.v1.TenantService",
 	HandlerType: (*TenantServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

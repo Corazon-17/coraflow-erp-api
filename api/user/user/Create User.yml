@@ -1,24 +1,20 @@
 info:
-  name: Create Tenant
+  name: Create User
   type: http
   seq: 1
 
 http:
   method: POST
-  url: "{{apiUrl}}/tenants"
+  url: "{{apiUrl}}/users"
   body:
     type: json
     data: |-
       {
-        "name": "Stark Industries",
-        "slug": "STI"
+        "email": "desmond@gmail.com",
+        "password": "00000000",
+        "isInternal": true
       }
   auth: inherit
-
-runtime:
-  variables:
-    - name: baseUrl
-      value: ""
 
 settings:
   encodeUrl: true

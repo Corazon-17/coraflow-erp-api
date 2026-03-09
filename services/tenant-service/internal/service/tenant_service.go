@@ -6,6 +6,8 @@ import (
 	db "coraflow-erp-api/services/tenant-service/db/sqlc"
 	"coraflow-erp-api/services/tenant-service/internal/repository"
 	"coraflow-erp-api/shared/utils"
+
+	"github.com/google/uuid"
 )
 
 type TenantService struct {
@@ -56,7 +58,7 @@ func (s *TenantService) GetTenantBySlug(ctx context.Context, slug string) (*db.T
 	return &t, nil
 }
 
-func (s *TenantService) ListTenant(ctx context.Context) ([]db.Tenant, error) {
+func (s *TenantService) ListTenants(ctx context.Context) ([]db.Tenant, error) {
 
 	return s.repo.List(ctx)
 }
@@ -81,12 +83,6 @@ func (s *TenantService) UpdateTenant(ctx context.Context, id string, name string
 	return &t, nil
 }
 
-func (s *TenantService) DeleteTenant(ctx context.Context, id string) error {
-
-	tenantUUID, err := utils.ToUUID(id)
-	if err != nil {
-		return err
-	}
-
-	return s.repo.Delete(ctx, tenantUUID)
+func (s *TenantService) DeleteTenant(ctx context.Context, id uuid.UUID) error {
+	return s.repo.Delete(ctx, id)
 }
