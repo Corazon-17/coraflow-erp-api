@@ -1,4 +1,4 @@
-package handler
+package user
 
 import (
 	"context"
@@ -10,11 +10,11 @@ import (
 )
 
 type AuthHandler struct {
-	userClient *client.UserClient
+	client *client.UserClient
 }
 
 func NewAuthHandler(c *client.UserClient) *AuthHandler {
-	return &AuthHandler{userClient: c}
+	return &AuthHandler{client: c}
 }
 
 func (h *AuthHandler) Login(c fiber.Ctx) error {
@@ -25,7 +25,7 @@ func (h *AuthHandler) Login(c fiber.Ctx) error {
 		return err
 	}
 
-	res, err := h.userClient.Auth.Login(context.Background(), req)
+	res, err := h.client.Auth.Login(context.Background(), req)
 	if err != nil {
 		return err
 	}

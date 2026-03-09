@@ -3,12 +3,12 @@ package handler
 import (
 	"context"
 
-	hrpb "coraflow-erp-api/proto/hr/department/v1"
+	departmentpb "coraflow-erp-api/proto/hr/department/v1"
 	"coraflow-erp-api/services/hr-service/internal/service"
 )
 
 type DepartmentHandler struct {
-	hrpb.UnimplementedDepartmentServiceServer
+	departmentpb.UnimplementedDepartmentServiceServer
 	service *service.DepartmentService
 }
 
@@ -18,7 +18,7 @@ func NewDepartmentHandler(s *service.DepartmentService) *DepartmentHandler {
 	}
 }
 
-func (h *DepartmentHandler) CreateDepartment(ctx context.Context, req *hrpb.CreateDepartmentRequest) (*hrpb.DepartmentResponse, error) {
+func (h *DepartmentHandler) CreateDepartment(ctx context.Context, req *departmentpb.CreateDepartmentRequest) (*departmentpb.DepartmentResponse, error) {
 
 	dept, err := h.service.Create(
 		ctx,
@@ -30,14 +30,14 @@ func (h *DepartmentHandler) CreateDepartment(ctx context.Context, req *hrpb.Crea
 		return nil, err
 	}
 
-	return &hrpb.DepartmentResponse{
+	return &departmentpb.DepartmentResponse{
 		Id:       dept.ID.String(),
 		TenantId: dept.TenantID.String(),
 		Name:     dept.Name,
 	}, nil
 }
 
-func (h *DepartmentHandler) GetDepartment(ctx context.Context, req *hrpb.GetDepartmentRequest) (*hrpb.DepartmentResponse, error) {
+func (h *DepartmentHandler) GetDepartment(ctx context.Context, req *departmentpb.GetDepartmentRequest) (*departmentpb.DepartmentResponse, error) {
 
 	dept, err := h.service.Get(
 		ctx,
@@ -48,14 +48,14 @@ func (h *DepartmentHandler) GetDepartment(ctx context.Context, req *hrpb.GetDepa
 		return nil, err
 	}
 
-	return &hrpb.DepartmentResponse{
+	return &departmentpb.DepartmentResponse{
 		Id:       dept.ID.String(),
 		TenantId: dept.TenantID.String(),
 		Name:     dept.Name,
 	}, nil
 }
 
-func (h *DepartmentHandler) ListDepartment(ctx context.Context, req *hrpb.ListDepartmentRequest) (*hrpb.ListDepartmentResponse, error) {
+func (h *DepartmentHandler) ListDepartment(ctx context.Context, req *departmentpb.ListDepartmentRequest) (*departmentpb.ListDepartmentResponse, error) {
 
 	list, err := h.service.List(
 		ctx,
@@ -65,11 +65,11 @@ func (h *DepartmentHandler) ListDepartment(ctx context.Context, req *hrpb.ListDe
 		return nil, err
 	}
 
-	res := make([]*hrpb.DepartmentResponse, 0)
+	res := make([]*departmentpb.DepartmentResponse, 0)
 
 	for _, d := range list {
 
-		res = append(res, &hrpb.DepartmentResponse{
+		res = append(res, &departmentpb.DepartmentResponse{
 			Id:       d.ID.String(),
 			TenantId: d.TenantID.String(),
 			Name:     d.Name,
@@ -77,13 +77,13 @@ func (h *DepartmentHandler) ListDepartment(ctx context.Context, req *hrpb.ListDe
 
 	}
 
-	return &hrpb.ListDepartmentResponse{
+	return &departmentpb.ListDepartmentResponse{
 		Departments: res,
 	}, nil
 }
 
-func (h *DepartmentHandler) DeleteDepartment(ctx context.Context, req *hrpb.DeleteDepartmentRequest,
-) (*hrpb.DeleteDepartmentResponse, error) {
+func (h *DepartmentHandler) DeleteDepartment(ctx context.Context, req *departmentpb.DeleteDepartmentRequest,
+) (*departmentpb.DeleteDepartmentResponse, error) {
 
 	err := h.service.Delete(
 		ctx,
@@ -94,7 +94,7 @@ func (h *DepartmentHandler) DeleteDepartment(ctx context.Context, req *hrpb.Dele
 		return nil, err
 	}
 
-	return &hrpb.DeleteDepartmentResponse{
+	return &departmentpb.DeleteDepartmentResponse{
 		Success: true,
 	}, nil
 }

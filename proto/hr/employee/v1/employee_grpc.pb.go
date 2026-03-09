@@ -4,7 +4,7 @@
 // - protoc             v7.34.0
 // source: proto/hr/employee/v1/employee.proto
 
-package hrpb
+package employeepb
 
 import (
 	context "context"
@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	EmployeeService_CreateEmployee_FullMethodName = "/hr.v1.EmployeeService/CreateEmployee"
-	EmployeeService_GetEmployee_FullMethodName    = "/hr.v1.EmployeeService/GetEmployee"
-	EmployeeService_ListEmployee_FullMethodName   = "/hr.v1.EmployeeService/ListEmployee"
-	EmployeeService_DeleteEmployee_FullMethodName = "/hr.v1.EmployeeService/DeleteEmployee"
+	EmployeeService_CreateEmployee_FullMethodName = "/hr.employee.v1.EmployeeService/CreateEmployee"
+	EmployeeService_GetEmployee_FullMethodName    = "/hr.employee.v1.EmployeeService/GetEmployee"
+	EmployeeService_ListEmployee_FullMethodName   = "/hr.employee.v1.EmployeeService/ListEmployee"
+	EmployeeService_DeleteEmployee_FullMethodName = "/hr.employee.v1.EmployeeService/DeleteEmployee"
 )
 
 // EmployeeServiceClient is the client API for EmployeeService service.
@@ -210,7 +210,7 @@ func _EmployeeService_DeleteEmployee_Handler(srv interface{}, ctx context.Contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var EmployeeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "hr.v1.EmployeeService",
+	ServiceName: "hr.employee.v1.EmployeeService",
 	HandlerType: (*EmployeeServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

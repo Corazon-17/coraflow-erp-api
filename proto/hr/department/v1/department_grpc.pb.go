@@ -4,7 +4,7 @@
 // - protoc             v7.34.0
 // source: proto/hr/department/v1/department.proto
 
-package hrpb
+package departmentpb
 
 import (
 	context "context"
@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DepartmentService_CreateDepartment_FullMethodName = "/hr.v1.DepartmentService/CreateDepartment"
-	DepartmentService_GetDepartment_FullMethodName    = "/hr.v1.DepartmentService/GetDepartment"
-	DepartmentService_ListDepartment_FullMethodName   = "/hr.v1.DepartmentService/ListDepartment"
-	DepartmentService_DeleteDepartment_FullMethodName = "/hr.v1.DepartmentService/DeleteDepartment"
+	DepartmentService_CreateDepartment_FullMethodName = "/hr.department.v1.DepartmentService/CreateDepartment"
+	DepartmentService_GetDepartment_FullMethodName    = "/hr.department.v1.DepartmentService/GetDepartment"
+	DepartmentService_ListDepartment_FullMethodName   = "/hr.department.v1.DepartmentService/ListDepartment"
+	DepartmentService_DeleteDepartment_FullMethodName = "/hr.department.v1.DepartmentService/DeleteDepartment"
 )
 
 // DepartmentServiceClient is the client API for DepartmentService service.
@@ -210,7 +210,7 @@ func _DepartmentService_DeleteDepartment_Handler(srv interface{}, ctx context.Co
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var DepartmentService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "hr.v1.DepartmentService",
+	ServiceName: "hr.department.v1.DepartmentService",
 	HandlerType: (*DepartmentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

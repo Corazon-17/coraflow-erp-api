@@ -4,7 +4,7 @@
 // 	protoc        v7.34.0
 // source: proto/hr/employee/v1/employee.proto
 
-package hrpb
+package employeepb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -389,15 +389,15 @@ var File_proto_hr_employee_v1_employee_proto protoreflect.FileDescriptor
 
 const file_proto_hr_employee_v1_employee_proto_rawDesc = "" +
 	"\n" +
-	"#proto/hr/employee/v1/employee.proto\x12\x05hr.v1\"{\n" +
+	"#proto/hr/employee/v1/employee.proto\x12\x0ehr.employee.v1\"{\n" +
 	"\x10EmployeeResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x03 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x04 \x01(\tR\blastName\"M\n" +
-	"\x14ListEmployeeResponse\x125\n" +
-	"\temployees\x18\x01 \x03(\v2\x17.hr.v1.EmployeeResponseR\temployees\"p\n" +
+	"\tlast_name\x18\x04 \x01(\tR\blastName\"V\n" +
+	"\x14ListEmployeeResponse\x12>\n" +
+	"\temployees\x18\x01 \x03(\v2 .hr.employee.v1.EmployeeResponseR\temployees\"p\n" +
 	"\x15CreateEmployeeRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x1d\n" +
 	"\n" +
@@ -412,12 +412,12 @@ const file_proto_hr_employee_v1_employee_proto_rawDesc = "" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\"2\n" +
 	"\x16DeleteEmployeeResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xb5\x02\n" +
-	"\x0fEmployeeService\x12G\n" +
-	"\x0eCreateEmployee\x12\x1c.hr.v1.CreateEmployeeRequest\x1a\x17.hr.v1.EmployeeResponse\x12A\n" +
-	"\vGetEmployee\x12\x19.hr.v1.GetEmployeeRequest\x1a\x17.hr.v1.EmployeeResponse\x12G\n" +
-	"\fListEmployee\x12\x1a.hr.v1.ListEmployeeRequest\x1a\x1b.hr.v1.ListEmployeeResponse\x12M\n" +
-	"\x0eDeleteEmployee\x12\x1c.hr.v1.DeleteEmployeeRequest\x1a\x1d.hr.v1.DeleteEmployeeResponseB#Z!coraflow-erp-api/proto/hr/v1;hrpbb\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xfd\x02\n" +
+	"\x0fEmployeeService\x12Y\n" +
+	"\x0eCreateEmployee\x12%.hr.employee.v1.CreateEmployeeRequest\x1a .hr.employee.v1.EmployeeResponse\x12S\n" +
+	"\vGetEmployee\x12\".hr.employee.v1.GetEmployeeRequest\x1a .hr.employee.v1.EmployeeResponse\x12Y\n" +
+	"\fListEmployee\x12#.hr.employee.v1.ListEmployeeRequest\x1a$.hr.employee.v1.ListEmployeeResponse\x12_\n" +
+	"\x0eDeleteEmployee\x12%.hr.employee.v1.DeleteEmployeeRequest\x1a&.hr.employee.v1.DeleteEmployeeResponseB2Z0coraflow-erp-api/proto/hr/employee/v1;employeepbb\x06proto3"
 
 var (
 	file_proto_hr_employee_v1_employee_proto_rawDescOnce sync.Once
@@ -433,24 +433,24 @@ func file_proto_hr_employee_v1_employee_proto_rawDescGZIP() []byte {
 
 var file_proto_hr_employee_v1_employee_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_hr_employee_v1_employee_proto_goTypes = []any{
-	(*EmployeeResponse)(nil),       // 0: hr.v1.EmployeeResponse
-	(*ListEmployeeResponse)(nil),   // 1: hr.v1.ListEmployeeResponse
-	(*CreateEmployeeRequest)(nil),  // 2: hr.v1.CreateEmployeeRequest
-	(*GetEmployeeRequest)(nil),     // 3: hr.v1.GetEmployeeRequest
-	(*ListEmployeeRequest)(nil),    // 4: hr.v1.ListEmployeeRequest
-	(*DeleteEmployeeRequest)(nil),  // 5: hr.v1.DeleteEmployeeRequest
-	(*DeleteEmployeeResponse)(nil), // 6: hr.v1.DeleteEmployeeResponse
+	(*EmployeeResponse)(nil),       // 0: hr.employee.v1.EmployeeResponse
+	(*ListEmployeeResponse)(nil),   // 1: hr.employee.v1.ListEmployeeResponse
+	(*CreateEmployeeRequest)(nil),  // 2: hr.employee.v1.CreateEmployeeRequest
+	(*GetEmployeeRequest)(nil),     // 3: hr.employee.v1.GetEmployeeRequest
+	(*ListEmployeeRequest)(nil),    // 4: hr.employee.v1.ListEmployeeRequest
+	(*DeleteEmployeeRequest)(nil),  // 5: hr.employee.v1.DeleteEmployeeRequest
+	(*DeleteEmployeeResponse)(nil), // 6: hr.employee.v1.DeleteEmployeeResponse
 }
 var file_proto_hr_employee_v1_employee_proto_depIdxs = []int32{
-	0, // 0: hr.v1.ListEmployeeResponse.employees:type_name -> hr.v1.EmployeeResponse
-	2, // 1: hr.v1.EmployeeService.CreateEmployee:input_type -> hr.v1.CreateEmployeeRequest
-	3, // 2: hr.v1.EmployeeService.GetEmployee:input_type -> hr.v1.GetEmployeeRequest
-	4, // 3: hr.v1.EmployeeService.ListEmployee:input_type -> hr.v1.ListEmployeeRequest
-	5, // 4: hr.v1.EmployeeService.DeleteEmployee:input_type -> hr.v1.DeleteEmployeeRequest
-	0, // 5: hr.v1.EmployeeService.CreateEmployee:output_type -> hr.v1.EmployeeResponse
-	0, // 6: hr.v1.EmployeeService.GetEmployee:output_type -> hr.v1.EmployeeResponse
-	1, // 7: hr.v1.EmployeeService.ListEmployee:output_type -> hr.v1.ListEmployeeResponse
-	6, // 8: hr.v1.EmployeeService.DeleteEmployee:output_type -> hr.v1.DeleteEmployeeResponse
+	0, // 0: hr.employee.v1.ListEmployeeResponse.employees:type_name -> hr.employee.v1.EmployeeResponse
+	2, // 1: hr.employee.v1.EmployeeService.CreateEmployee:input_type -> hr.employee.v1.CreateEmployeeRequest
+	3, // 2: hr.employee.v1.EmployeeService.GetEmployee:input_type -> hr.employee.v1.GetEmployeeRequest
+	4, // 3: hr.employee.v1.EmployeeService.ListEmployee:input_type -> hr.employee.v1.ListEmployeeRequest
+	5, // 4: hr.employee.v1.EmployeeService.DeleteEmployee:input_type -> hr.employee.v1.DeleteEmployeeRequest
+	0, // 5: hr.employee.v1.EmployeeService.CreateEmployee:output_type -> hr.employee.v1.EmployeeResponse
+	0, // 6: hr.employee.v1.EmployeeService.GetEmployee:output_type -> hr.employee.v1.EmployeeResponse
+	1, // 7: hr.employee.v1.EmployeeService.ListEmployee:output_type -> hr.employee.v1.ListEmployeeResponse
+	6, // 8: hr.employee.v1.EmployeeService.DeleteEmployee:output_type -> hr.employee.v1.DeleteEmployeeResponse
 	5, // [5:9] is the sub-list for method output_type
 	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name

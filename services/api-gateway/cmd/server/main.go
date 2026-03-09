@@ -1,22 +1,31 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"coraflow-erp-api/services/api-gateway/internal/client"
-	"coraflow-erp-api/services/api-gateway/internal/handler"
+	"coraflow-erp-api/services/api-gateway/internal/handler/hr"
+	"coraflow-erp-api/services/api-gateway/internal/handler/tenant"
+	"coraflow-erp-api/services/api-gateway/internal/handler/user"
 	"coraflow-erp-api/services/api-gateway/internal/route"
 	"coraflow-erp-api/shared/config"
+	"coraflow-erp-api/shared/utils"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 )
 
 func main() {
 
 	cfg := config.Load()
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		StrictRouting: false,
+	})
+	app.Use(cors.New(cors.Config{
+		AllowMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
+		AllowOrigins: []string{"*"},
+	}))
 
 	tenantClient, err := client.NewTenantClient(cfg)
 	if err != nil {
@@ -33,18 +42,17 @@ func main() {
 		log.Fatal(err)
 	}
 
-	authHandler := handler.NewAuthHandler(userClient)
-	tenantHandler := handler.NewTenantHandler(tenantClient)
-	departmentHandler := handler.NewDepartmentHandler(hrClient)
-	employeeHandler := handler.NewEmployeeHandler(hrClient)
+	tenantHandler := tenant.NewTenantHandler(tenantClient)
+	authHandler := user.NewAuthHandler(userClient)
+	userHandler := user.NewUserHandler(userClient)
+	deptHandler := hr.NewDepartmentHandler(hrClient)
+	empHandler := hr.NewEmployeeHandler(hrClient)
 
-	route.RegisterRoutes(
-		app,
-		authHandler,
-		tenantHandler,
-		departmentHandler,
-		employeeHandler,
-	)
+	api := app.Group("api")
 
-	log.Fatal(app.Listen(fmt.Sprintf(":%s", cfg.ApiGatewayPort)))
+	route.RegisterTenantRoutes(api, tenantHandler)
+	route.RegisterUserRoutes(api, authHandler, userHandler)
+	route.RegisterHRRoutes(api, deptHandler, empHandler)
+
+	log.Fatal(app.Listen(utils.GetPort(cfg.ApiGatewayPort)))
 }

@@ -3,12 +3,12 @@ package handler
 import (
 	"context"
 
-	hrpb "coraflow-erp-api/proto/hr/employee/v1"
+	employeepb "coraflow-erp-api/proto/hr/employee/v1"
 	"coraflow-erp-api/services/hr-service/internal/service"
 )
 
 type EmployeeHandler struct {
-	hrpb.UnimplementedEmployeeServiceServer
+	employeepb.UnimplementedEmployeeServiceServer
 	service *service.EmployeeService
 }
 
@@ -18,7 +18,7 @@ func NewEmployeeHandler(s *service.EmployeeService) *EmployeeHandler {
 	}
 }
 
-func (h *EmployeeHandler) CreateEmployee(ctx context.Context, req *hrpb.CreateEmployeeRequest) (*hrpb.EmployeeResponse, error) {
+func (h *EmployeeHandler) CreateEmployee(ctx context.Context, req *employeepb.CreateEmployeeRequest) (*employeepb.EmployeeResponse, error) {
 
 	e, err := h.service.Create(
 		ctx,
@@ -30,7 +30,7 @@ func (h *EmployeeHandler) CreateEmployee(ctx context.Context, req *hrpb.CreateEm
 		return nil, err
 	}
 
-	return &hrpb.EmployeeResponse{
+	return &employeepb.EmployeeResponse{
 		Id:        e.ID.String(),
 		TenantId:  e.TenantID.String(),
 		FirstName: e.FirstName,
@@ -38,7 +38,7 @@ func (h *EmployeeHandler) CreateEmployee(ctx context.Context, req *hrpb.CreateEm
 	}, nil
 }
 
-func (h *EmployeeHandler) GetEmployee(ctx context.Context, req *hrpb.GetEmployeeRequest) (*hrpb.EmployeeResponse, error) {
+func (h *EmployeeHandler) GetEmployee(ctx context.Context, req *employeepb.GetEmployeeRequest) (*employeepb.EmployeeResponse, error) {
 
 	e, err := h.service.Get(
 		ctx,
@@ -49,7 +49,7 @@ func (h *EmployeeHandler) GetEmployee(ctx context.Context, req *hrpb.GetEmployee
 		return nil, err
 	}
 
-	return &hrpb.EmployeeResponse{
+	return &employeepb.EmployeeResponse{
 		Id:        e.ID.String(),
 		TenantId:  e.TenantID.String(),
 		FirstName: e.FirstName,
@@ -57,7 +57,7 @@ func (h *EmployeeHandler) GetEmployee(ctx context.Context, req *hrpb.GetEmployee
 	}, nil
 }
 
-func (h *EmployeeHandler) ListEmployee(ctx context.Context, req *hrpb.ListEmployeeRequest) (*hrpb.ListEmployeeResponse, error) {
+func (h *EmployeeHandler) ListEmployee(ctx context.Context, req *employeepb.ListEmployeeRequest) (*employeepb.ListEmployeeResponse, error) {
 
 	list, err := h.service.List(
 		ctx,
@@ -67,11 +67,11 @@ func (h *EmployeeHandler) ListEmployee(ctx context.Context, req *hrpb.ListEmploy
 		return nil, err
 	}
 
-	res := make([]*hrpb.EmployeeResponse, 0)
+	res := make([]*employeepb.EmployeeResponse, 0)
 
 	for _, e := range list {
 
-		res = append(res, &hrpb.EmployeeResponse{
+		res = append(res, &employeepb.EmployeeResponse{
 			Id:        e.ID.String(),
 			TenantId:  e.TenantID.String(),
 			FirstName: e.FirstName,
@@ -80,12 +80,12 @@ func (h *EmployeeHandler) ListEmployee(ctx context.Context, req *hrpb.ListEmploy
 
 	}
 
-	return &hrpb.ListEmployeeResponse{
+	return &employeepb.ListEmployeeResponse{
 		Employees: res,
 	}, nil
 }
 
-func (h *EmployeeHandler) DeleteEmployee(ctx context.Context, req *hrpb.DeleteEmployeeRequest) (*hrpb.DeleteEmployeeResponse, error) {
+func (h *EmployeeHandler) DeleteEmployee(ctx context.Context, req *employeepb.DeleteEmployeeRequest) (*employeepb.DeleteEmployeeResponse, error) {
 
 	err := h.service.Delete(
 		ctx,
@@ -96,7 +96,7 @@ func (h *EmployeeHandler) DeleteEmployee(ctx context.Context, req *hrpb.DeleteEm
 		return nil, err
 	}
 
-	return &hrpb.DeleteEmployeeResponse{
+	return &employeepb.DeleteEmployeeResponse{
 		Success: true,
 	}, nil
 }

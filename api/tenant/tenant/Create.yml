@@ -1,0 +1,27 @@
+info:
+  name: Create
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{apiUrl}}/tenants"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Los Pollos Hermanos",
+        "slug": "LPH"
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: baseUrl
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

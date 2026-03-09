@@ -4,7 +4,7 @@
 // 	protoc        v7.34.0
 // source: proto/hr/department/v1/department.proto
 
-package hrpb
+package departmentpb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -381,13 +381,13 @@ var File_proto_hr_department_v1_department_proto protoreflect.FileDescriptor
 
 const file_proto_hr_department_v1_department_proto_rawDesc = "" +
 	"\n" +
-	"'proto/hr/department/v1/department.proto\x12\x05hr.v1\"U\n" +
+	"'proto/hr/department/v1/department.proto\x12\x10hr.department.v1\"U\n" +
 	"\x12DepartmentResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"U\n" +
-	"\x16ListDepartmentResponse\x12;\n" +
-	"\vdepartments\x18\x01 \x03(\v2\x19.hr.v1.DepartmentResponseR\vdepartments\"z\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"`\n" +
+	"\x16ListDepartmentResponse\x12F\n" +
+	"\vdepartments\x18\x01 \x03(\v2$.hr.department.v1.DepartmentResponseR\vdepartments\"z\n" +
 	"\x17CreateDepartmentRequest\x12\x1b\n" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -403,12 +403,12 @@ const file_proto_hr_department_v1_department_proto_rawDesc = "" +
 	"\ttenant_id\x18\x01 \x01(\tR\btenantId\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\tR\x02id\"4\n" +
 	"\x18DeleteDepartmentResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xcf\x02\n" +
-	"\x11DepartmentService\x12M\n" +
-	"\x10CreateDepartment\x12\x1e.hr.v1.CreateDepartmentRequest\x1a\x19.hr.v1.DepartmentResponse\x12G\n" +
-	"\rGetDepartment\x12\x1b.hr.v1.GetDepartmentRequest\x1a\x19.hr.v1.DepartmentResponse\x12M\n" +
-	"\x0eListDepartment\x12\x1c.hr.v1.ListDepartmentRequest\x1a\x1d.hr.v1.ListDepartmentResponse\x12S\n" +
-	"\x10DeleteDepartment\x12\x1e.hr.v1.DeleteDepartmentRequest\x1a\x1f.hr.v1.DeleteDepartmentResponseB#Z!coraflow-erp-api/proto/hr/v1;hrpbb\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa7\x03\n" +
+	"\x11DepartmentService\x12c\n" +
+	"\x10CreateDepartment\x12).hr.department.v1.CreateDepartmentRequest\x1a$.hr.department.v1.DepartmentResponse\x12]\n" +
+	"\rGetDepartment\x12&.hr.department.v1.GetDepartmentRequest\x1a$.hr.department.v1.DepartmentResponse\x12c\n" +
+	"\x0eListDepartment\x12'.hr.department.v1.ListDepartmentRequest\x1a(.hr.department.v1.ListDepartmentResponse\x12i\n" +
+	"\x10DeleteDepartment\x12).hr.department.v1.DeleteDepartmentRequest\x1a*.hr.department.v1.DeleteDepartmentResponseB6Z4coraflow-erp-api/proto/hr/department/v1;departmentpbb\x06proto3"
 
 var (
 	file_proto_hr_department_v1_department_proto_rawDescOnce sync.Once
@@ -424,24 +424,24 @@ func file_proto_hr_department_v1_department_proto_rawDescGZIP() []byte {
 
 var file_proto_hr_department_v1_department_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_hr_department_v1_department_proto_goTypes = []any{
-	(*DepartmentResponse)(nil),       // 0: hr.v1.DepartmentResponse
-	(*ListDepartmentResponse)(nil),   // 1: hr.v1.ListDepartmentResponse
-	(*CreateDepartmentRequest)(nil),  // 2: hr.v1.CreateDepartmentRequest
-	(*GetDepartmentRequest)(nil),     // 3: hr.v1.GetDepartmentRequest
-	(*ListDepartmentRequest)(nil),    // 4: hr.v1.ListDepartmentRequest
-	(*DeleteDepartmentRequest)(nil),  // 5: hr.v1.DeleteDepartmentRequest
-	(*DeleteDepartmentResponse)(nil), // 6: hr.v1.DeleteDepartmentResponse
+	(*DepartmentResponse)(nil),       // 0: hr.department.v1.DepartmentResponse
+	(*ListDepartmentResponse)(nil),   // 1: hr.department.v1.ListDepartmentResponse
+	(*CreateDepartmentRequest)(nil),  // 2: hr.department.v1.CreateDepartmentRequest
+	(*GetDepartmentRequest)(nil),     // 3: hr.department.v1.GetDepartmentRequest
+	(*ListDepartmentRequest)(nil),    // 4: hr.department.v1.ListDepartmentRequest
+	(*DeleteDepartmentRequest)(nil),  // 5: hr.department.v1.DeleteDepartmentRequest
+	(*DeleteDepartmentResponse)(nil), // 6: hr.department.v1.DeleteDepartmentResponse
 }
 var file_proto_hr_department_v1_department_proto_depIdxs = []int32{
-	0, // 0: hr.v1.ListDepartmentResponse.departments:type_name -> hr.v1.DepartmentResponse
-	2, // 1: hr.v1.DepartmentService.CreateDepartment:input_type -> hr.v1.CreateDepartmentRequest
-	3, // 2: hr.v1.DepartmentService.GetDepartment:input_type -> hr.v1.GetDepartmentRequest
-	4, // 3: hr.v1.DepartmentService.ListDepartment:input_type -> hr.v1.ListDepartmentRequest
-	5, // 4: hr.v1.DepartmentService.DeleteDepartment:input_type -> hr.v1.DeleteDepartmentRequest
-	0, // 5: hr.v1.DepartmentService.CreateDepartment:output_type -> hr.v1.DepartmentResponse
-	0, // 6: hr.v1.DepartmentService.GetDepartment:output_type -> hr.v1.DepartmentResponse
-	1, // 7: hr.v1.DepartmentService.ListDepartment:output_type -> hr.v1.ListDepartmentResponse
-	6, // 8: hr.v1.DepartmentService.DeleteDepartment:output_type -> hr.v1.DeleteDepartmentResponse
+	0, // 0: hr.department.v1.ListDepartmentResponse.departments:type_name -> hr.department.v1.DepartmentResponse
+	2, // 1: hr.department.v1.DepartmentService.CreateDepartment:input_type -> hr.department.v1.CreateDepartmentRequest
+	3, // 2: hr.department.v1.DepartmentService.GetDepartment:input_type -> hr.department.v1.GetDepartmentRequest
+	4, // 3: hr.department.v1.DepartmentService.ListDepartment:input_type -> hr.department.v1.ListDepartmentRequest
+	5, // 4: hr.department.v1.DepartmentService.DeleteDepartment:input_type -> hr.department.v1.DeleteDepartmentRequest
+	0, // 5: hr.department.v1.DepartmentService.CreateDepartment:output_type -> hr.department.v1.DepartmentResponse
+	0, // 6: hr.department.v1.DepartmentService.GetDepartment:output_type -> hr.department.v1.DepartmentResponse
+	1, // 7: hr.department.v1.DepartmentService.ListDepartment:output_type -> hr.department.v1.ListDepartmentResponse
+	6, // 8: hr.department.v1.DepartmentService.DeleteDepartment:output_type -> hr.department.v1.DeleteDepartmentResponse
 	5, // [5:9] is the sub-list for method output_type
 	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
