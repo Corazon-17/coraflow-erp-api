@@ -52,17 +52,23 @@ tasks:
     cmds:
       - go run ./cmd/server
 
-  migrate:user:
-  cmds:
-    - migrate -path services/user-service/db/migrations -database "$USER_DB_URL" up
+  migrate:
+    deps:
+      - migrate:tenant
+      - migrate:user
+      - migrate:hr
 
   migrate:tenant:
     cmds:
-      - migrate -path services/tenant-service/db/migrations -database "$TENANT_DB_URL" up
+      - ./scripts/migrate.sh $TENANT_DB_URL services/tenant-service/db/migrations
+
+  migrate:user:
+    cmds:
+      - ./scripts/migrate.sh $USER_DB_URL services/user-service/db/migrations
 
   migrate:hr:
     cmds:
-      - migrate -path services/hr-service/db/migrations -database "$HR_DB_URL" up
+      - ./scripts/migrate.sh $HR_DB_URL services/hr-service/db/migrations
 
   proto:
     desc: Generate protobuf files
