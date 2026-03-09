@@ -24,6 +24,7 @@ func (h *AuthHandler) Login(ctx context.Context, req *authpb.LoginRequest) (*aut
 	}
 
 	return &authpb.LoginResponse{
-		AccessToken: token,
+		AccessToken:  token.AccessToken,
+		RefreshToken: token.RefreshToken,
 	}, nil
 }

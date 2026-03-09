@@ -29,5 +29,28 @@ func (h *AuthHandler) Login(c fiber.Ctx) error {
 		return err
 	}
 
-	return c.JSON(res)
+	access := res.AccessToken
+	refresh := res.RefreshToken
+
+	c.Cookie(&fiber.Cookie{
+		Name:     "access-token",
+		Value:    access,
+		HTTPOnly: true,
+		Secure:   false,
+		SameSite: "Lax",
+		Path:     "/",
+	})
+
+	c.Cookie(&fiber.Cookie{
+		Name:     "refresh-token",
+		Value:    refresh,
+		HTTPOnly: true,
+		Secure:   false,
+		SameSite: "Lax",
+		Path:     "/auth/refresh",
+	})
+
+	return c.JSON(fiber.Map{
+		"message": "login success",
+	})
 }

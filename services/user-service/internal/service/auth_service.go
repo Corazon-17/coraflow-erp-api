@@ -5,45 +5,94 @@ import (
 
 	"coraflow-erp-api/services/user-service/internal/repository"
 	"coraflow-erp-api/shared/jwt"
+	"coraflow-erp-api/shared/utils"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthService struct {
-	repo      *repository.UserRepository
-	jwtSecret string
+	userRepo     *repository.UserRepository
+	tokenService *TokenService
 }
 
-func NewAuthService(repo *repository.UserRepository, secret string) *AuthService {
+func NewAuthService(userRepo *repository.UserRepository, tokenService *TokenService) *AuthService {
 	return &AuthService{
-		repo:      repo,
-		jwtSecret: secret,
+		userRepo:     userRepo,
+		tokenService: tokenService,
 	}
 }
 
-func (s *AuthService) Login(ctx context.Context, email, password string) (string, error) {
+func (s *AuthService) Login(ctx context.Context, email, password string) (*jwt.Payload, error) {
 
-	user, err := s.repo.GetByEmail(ctx, email)
+	user, err := s.userRepo.GetByEmail(ctx, email)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	var tenantID string
 	if user.TenantID != nil {
-		id := user.TenantID.String()
-		tenantID = id
+		tenantID = user.TenantID.String()
 	}
 
-	token, err := jwt.Generate(s.jwtSecret, jwt.Claims{
-		UserID:     user.ID.String(),
-		TenantID:   &tenantID,
-		IsInternal: user.IsInternal,
-	})
+	accessToken, err := s.tokenService.jwt.GenerateAccessToken(user.ID.String(), tenantID)
+	if err != nil {
+		return nil, nil
+	}
 
-	return token, err
+	refreshToken, err := s.tokenService.jwt.GenerateRefreshToken(user.ID.String(), accessToken)
+	if err != nil {
+		return nil, nil
+	}
+
+	payload := jwt.Payload{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}
+
+	return &payload, err
+}
+
+func (s *AuthService) Refresh(ctx context.Context, refreshToken string) (string, string, error) {
+
+	userID, tokenID, err := s.tokenService.ValidateRefresh(ctx, refreshToken)
+	if err != nil {
+		return "", "", err
+	}
+
+	err = s.tokenService.Revoke(ctx, tokenID)
+	if err != nil {
+		return "", "", err
+	}
+
+	userUUID, err := utils.ToUUID(userID)
+	if err != nil {
+		return "", "", err
+	}
+
+	user, err := s.userRepo.GetByID(ctx, userUUID)
+	if err != nil {
+		return "", "", err
+	}
+
+	var tenantID string
+	if user.TenantID != nil {
+		tenantID = user.TenantID.String()
+	}
+
+	return s.tokenService.GenerateTokens(ctx, user.ID.String(), tenantID)
+}
+
+func (s *AuthService) Logout(ctx context.Context, refreshToken string) error {
+
+	_, tokenID, err := s.tokenService.ValidateRefresh(ctx, refreshToken)
+	if err != nil {
+		return err
+	}
+
+	return s.tokenService.Revoke(ctx, tokenID)
 }

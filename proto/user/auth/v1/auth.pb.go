@@ -76,6 +76,7 @@ func (x *LoginRequest) GetPassword() string {
 type LoginResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	RefreshToken  string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -117,6 +118,13 @@ func (x *LoginResponse) GetAccessToken() string {
 	return ""
 }
 
+func (x *LoginResponse) GetRefreshToken() string {
+	if x != nil {
+		return x.RefreshToken
+	}
+	return ""
+}
+
 var File_proto_user_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_proto_user_auth_v1_auth_proto_rawDesc = "" +
@@ -124,9 +132,10 @@ const file_proto_user_auth_v1_auth_proto_rawDesc = "" +
 	"\x1dproto/user/auth/v1/auth.proto\x12\fuser.auth.v1\"@\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"2\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"W\n" +
 	"\rLoginResponse\x12!\n" +
-	"\faccess_token\x18\x01 \x01(\tR\vaccessToken2O\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken2O\n" +
 	"\vAuthService\x12@\n" +
 	"\x05Login\x12\x1a.user.auth.v1.LoginRequest\x1a\x1b.user.auth.v1.LoginResponseB,Z*coraflow-erp-api/proto/user/auth/v1;authpbb\x06proto3"
 
