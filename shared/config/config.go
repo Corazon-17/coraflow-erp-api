@@ -23,6 +23,8 @@ type Config struct {
 	JWTSecret        string
 	JWTAccessTTLMin  int64
 	JWTRefreshTTLMin int64
+
+	CSRFTTLMin int64
 }
 
 func Load() *Config {
@@ -48,6 +50,8 @@ func Load() *Config {
 		JWTSecret:        viper.GetString("JWT_SECRET"),
 		JWTAccessTTLMin:  viper.GetInt64("JWT_ACCESS_TTL_MIN"),
 		JWTRefreshTTLMin: viper.GetInt64("JWT_REFRESH_TTL_MIN"),
+
+		CSRFTTLMin: viper.GetInt64("CSRF_TTL_MIN"),
 	}
 
 	return config

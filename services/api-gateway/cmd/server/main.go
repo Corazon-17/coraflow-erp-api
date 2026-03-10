@@ -7,9 +7,12 @@ import (
 	"coraflow-erp-api/services/api-gateway/internal/handler/hr"
 	"coraflow-erp-api/services/api-gateway/internal/handler/tenant"
 	"coraflow-erp-api/services/api-gateway/internal/handler/user"
+	"coraflow-erp-api/services/api-gateway/internal/middleware"
 	"coraflow-erp-api/services/api-gateway/internal/route"
+	"coraflow-erp-api/services/api-gateway/internal/service"
 	"coraflow-erp-api/shared/config"
 	"coraflow-erp-api/shared/jwt"
+	"coraflow-erp-api/shared/redis"
 	"coraflow-erp-api/shared/utils"
 
 	"github.com/gofiber/fiber/v3"
@@ -19,6 +22,7 @@ import (
 func main() {
 
 	cfg := config.Load()
+	rds := redis.NewRedis(cfg.RedisUrl)
 
 	app := fiber.New(fiber.Config{
 		StrictRouting: false,
@@ -27,6 +31,7 @@ func main() {
 		AllowMethods: []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowOrigins: []string{"http://localhost:3000"},
 	}))
+	app.Use(middleware.CSRFMiddleware(rds))
 
 	tenantClient, err := client.NewTenantClient(cfg)
 	if err != nil {
@@ -43,14 +48,17 @@ func main() {
 		log.Fatal(err)
 	}
 
+	csrfService := service.NewCSRFService(rds, cfg.CSRFTTLMin)
+
 	tenantHandler := tenant.NewTenantHandler(tenantClient)
-	authHandler := user.NewAuthHandler(userClient)
+	authHandler := user.NewAuthHandler(userClient, csrfService)
 	userHandler := user.NewUserHandler(userClient)
 	deptHandler := hr.NewDepartmentHandler(hrClient)
 	empHandler := hr.NewEmployeeHandler(hrClient)
 
-	api := app.Group("api")
 	jwtManager := jwt.New(cfg.JWTSecret, cfg.JWTAccessTTLMin, cfg.JWTRefreshTTLMin)
+
+	api := app.Group("api")
 
 	route.RegisterTenantRoutes(api, tenantHandler, jwtManager)
 	route.RegisterUserRoutes(api, authHandler, userHandler, jwtManager)

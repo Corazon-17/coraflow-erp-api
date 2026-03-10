@@ -29,7 +29,7 @@ func main() {
 
 	jwt := jwt.New(cfg.JWTSecret, cfg.JWTAccessTTLMin, cfg.JWTRefreshTTLMin)
 
-	rds := redis.NewRedis(cfg.RabbitMQUrl)
+	rds := redis.NewRedis(cfg.RedisUrl)
 
 	repo := repository.NewUserRepository(q)
 

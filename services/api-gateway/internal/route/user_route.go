@@ -11,6 +11,7 @@ import (
 func RegisterUserRoutes(router fiber.Router, authHandler *user.AuthHandler, userHandler *user.UserHandler, jwtManager *jwt.Manager) {
 
 	authApi := router.Group("auth")
+	authApi.Get("csrf", authHandler.CSRF)
 	authApi.Post("login", authHandler.Login)
 
 	userApi := router.Group("users", middleware.AuthMiddleware(jwtManager))
