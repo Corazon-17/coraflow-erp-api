@@ -7,7 +7,9 @@ import (
 )
 
 type Manager struct {
-	secret []byte
+	secret        []byte
+	accessTTLMin  int64
+	refreshTTLMin int64
 }
 
 type Claims struct {
@@ -22,9 +24,11 @@ type Payload struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
-func New(secret string) *Manager {
+func New(secret string, accessTTLMin, refreshTTLMin int64) *Manager {
 	return &Manager{
-		secret: []byte(secret),
+		secret:        []byte(secret),
+		accessTTLMin:  accessTTLMin,
+		refreshTTLMin: refreshTTLMin,
 	}
 }
 
@@ -34,7 +38,7 @@ func (m *Manager) GenerateAccessToken(userID, tenantID string) (string, error) {
 		UserID:   userID,
 		TenantID: tenantID,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(15 * time.Second)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(m.accessTTLMin) * time.Minute)),
 		},
 	}
 
@@ -49,7 +53,7 @@ func (m *Manager) GenerateRefreshToken(userID string, tokenID string) (string, e
 		UserID:  userID,
 		TokenID: tokenID,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(7 * 24 * time.Hour)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(m.refreshTTLMin) * time.Minute)),
 		},
 	}
 

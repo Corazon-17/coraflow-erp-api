@@ -27,13 +27,13 @@ func main() {
 
 	q := db.New(pool)
 
-	jwt := jwt.New(cfg.JWTSecret)
+	jwt := jwt.New(cfg.JWTSecret, cfg.JWTAccessTTLMin, cfg.JWTRefreshTTLMin)
 
 	rds := redis.NewRedis(cfg.RabbitMQUrl)
 
 	repo := repository.NewUserRepository(q)
 
-	jwtService := service.NewTokenService(jwt, rds)
+	jwtService := service.NewTokenService(jwt, rds, cfg.JWTRefreshTTLMin)
 	userService := service.NewUserService(repo)
 	authService := service.NewAuthService(repo, jwtService)
 

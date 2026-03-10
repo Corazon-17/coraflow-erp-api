@@ -11,14 +11,16 @@ import (
 )
 
 type TokenService struct {
-	jwt   *jwt.Manager
-	redis *redis.Client
+	jwt              *jwt.Manager
+	redis            *redis.Client
+	jwtRefreshTTLMin int64
 }
 
-func NewTokenService(jwt *jwt.Manager, redis *redis.Client) *TokenService {
+func NewTokenService(jwt *jwt.Manager, redis *redis.Client, jwtRefreshTTLMin int64) *TokenService {
 	return &TokenService{
-		jwt:   jwt,
-		redis: redis,
+		jwt:              jwt,
+		redis:            redis,
+		jwtRefreshTTLMin: jwtRefreshTTLMin,
 	}
 }
 
@@ -38,7 +40,7 @@ func (s *TokenService) GenerateTokens(ctx context.Context, userID string, tenant
 
 	key := fmt.Sprintf("refresh:%s", tokenID)
 
-	err = s.redis.Set(ctx, key, userID, 7*24*time.Hour)
+	err = s.redis.Set(ctx, key, userID, time.Duration(s.jwtRefreshTTLMin)*time.Minute)
 	if err != nil {
 		return "", "", err
 	}

@@ -20,7 +20,9 @@ type Config struct {
 	RedisUrl    string
 	RabbitMQUrl string
 
-	JWTSecret string
+	JWTSecret        string
+	JWTAccessTTLMin  int64
+	JWTRefreshTTLMin int64
 }
 
 func Load() *Config {
@@ -43,7 +45,9 @@ func Load() *Config {
 		RedisUrl:    viper.GetString("REDIS_URL"),
 		RabbitMQUrl: viper.GetString("RABBITMQ_URL"),
 
-		JWTSecret: viper.GetString("JWT_SECRET"),
+		JWTSecret:        viper.GetString("JWT_SECRET"),
+		JWTAccessTTLMin:  viper.GetInt64("JWT_ACCESS_TTL_MIN"),
+		JWTRefreshTTLMin: viper.GetInt64("JWT_REFRESH_TTL_MIN"),
 	}
 
 	return config
